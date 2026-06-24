@@ -37,5 +37,23 @@ def get_upcoming_assignments(assignments):
             
     return upcoming_assignments
 
+def save_results(assignments):
+    with open("save_results.txt", "w") as f:
+        for assignment in assignments:
+                f.write(f"{assignment['name']}\n")
+
+def read_results():
+    with open("save_results.txt", "r") as f:
+        a = f.readlines()
+        for line in a:
+            print(line)
 result = get_upcoming_assignments(assignments)
 print(result)
+save_results(assignments)
+read_results()
+
+
+
+
+
+    
