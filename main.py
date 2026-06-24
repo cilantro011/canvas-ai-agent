@@ -1,4 +1,6 @@
 import datetime
+import json
+
 assignments = [
     {"name": "Math Homework", "due_date": "2026-06-05"},
     {"name": "History Essay", "due_date": "2026-06-27"},
@@ -47,11 +49,22 @@ def read_results():
         a = f.readlines()
         for line in a:
             print(line)
-result = get_upcoming_assignments(assignments)
-print(result)
+            
+def save_to_json(assignments):
+    with open("assignments.json", "w") as f:
+        json.dump(assignments, f)
+        
+def load_from_json():
+    with open("assignments.json", "r") as f:
+        return json.load(f)
+        
+        
+        
+save_to_json(assignments)
+print(load_from_json())
+print(f"Upcoming assignments :  {get_upcoming_assignments(assignments)}")
 save_results(assignments)
 read_results()
-
 
 
 
