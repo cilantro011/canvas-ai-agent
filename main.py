@@ -1,7 +1,11 @@
 import datetime
 import json
 import requests
-
+from dotenv import load_dotenv
+import os
+load_dotenv()
+token = os.getenv("CANVAS_TOKEN")
+headers = {"Authorization": f"Bearer {token}"}
 assignments = [
     {"name": "Math Homework", "due_date": "2026-06-05"},
     {"name": "History Essay", "due_date": "2026-06-27"},
@@ -72,15 +76,45 @@ def get_github_user(username):
                 "followers": data['followers']}
     else:
         return "User not found"
-        
+    
+def get_courses():
+   
+    response = requests.get("https://uta.instructure.com/api/v1/courses", headers=headers)    
+    data = response.json()
+    return data
+
+def get_course_names():
+    response = requests.get("https://uta.instructure.com/api/v1/courses", headers=headers)    
+    data = response.json()
+    courses = []
+    for a in data:
+        try:
+            courses.append({"name": a["name"], "id": a["id"]})
+        except KeyError:
+            continue
+    return courses
+
+def get_assignment(course_id):
+    response = requests.get(f"https://uta.instructure.com/api/v1/courses/{course_id}/assignments", headers= headers)
+    assignment = response.json()
+    return assignment
+    
+
 save_to_json(assignments)
 print(load_from_json())
 print(f"Upcoming assignments :  {get_upcoming_assignments(assignments)}")
 save_results(assignments)
 read_results()
 
-username = input("Enter your github username: ")
-print(get_github_user(username))
+#username = input("Enter your github username: ")
+#print(get_github_user(username)) 
+courses = get_courses()
+with open("courses.json", 'w') as f:
+    json.dump(courses, f, indent = 4)
+
+#print(get_course_names())
+
+print(get_assignment(256118))
 
 
 
