@@ -1,5 +1,6 @@
 import datetime
 import json
+import requests
 
 assignments = [
     {"name": "Math Homework", "due_date": "2026-06-05"},
@@ -59,12 +60,27 @@ def load_from_json():
         return json.load(f)
         
         
+def get_github_user(username):
+    response = requests.get(f"https://api.github.com/users/{username}")
+    data = response.json()
+    print(response.status_code)
+    
+    if response.status_code == 200:
+      return{
+                "login":data['login'], 
+                "public_repos": data['public_repos'],
+                "followers": data['followers']}
+    else:
+        return "User not found"
         
 save_to_json(assignments)
 print(load_from_json())
 print(f"Upcoming assignments :  {get_upcoming_assignments(assignments)}")
 save_results(assignments)
 read_results()
+
+username = input("Enter your github username: ")
+print(get_github_user(username))
 
 
 
