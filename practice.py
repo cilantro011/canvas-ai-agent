@@ -3,12 +3,12 @@ assignments = [{"name": "sajan", "points": 15},
                {"name": "ram", "points": 20},
                {"name": "hari", "points": 9}]
 
-def filter_with_points(assignments, points):
-    more_than_15 = []
+def get_assignment_names(assignments):
+    names = []
     for assignment in assignments:
-        if assignment['points'] > points:
-            more_than_15.append(assignment)
-    return more_than_15
+        names.append(assignment['name'])
+    
+    return names
 
-print(filter_with_points(assignments, 10))
+print(get_assignment_names(assignments))
         
