@@ -1,5 +1,8 @@
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
+import textwrap
+from ai_generator import generate_study_tips
+
 assignments = [
     {"name": "Math Homework", "due_date": "2026-06-05"},
     {"name": "History Essay", "due_date": "2026-06-27"},
@@ -21,6 +24,10 @@ def create_pdf(filename, assignments):
         
         c.drawString(x, y, f"{assignment['name']} - Due_date: {assignment['due_date']}")
         y -= 15
+        wrapped = textwrap.wrap(generate_study_tips(assignment_['name']), width = 80)
+        for line in wrapped:
+            c.drawstring(x,y, line)
+            y -= 15
     c.save()
 
 create_pdf("test.pdf", assignments)
