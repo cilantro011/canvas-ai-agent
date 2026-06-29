@@ -3,6 +3,7 @@ import json
 import requests
 from dotenv import load_dotenv
 import os
+
 load_dotenv()
 token = os.getenv("CANVAS_TOKEN")
 headers = {"Authorization": f"Bearer {token}"}
@@ -99,22 +100,22 @@ def get_assignment(course_id):
     assignment = response.json()
     return assignment
     
+if __name__ == "__main__":
+    save_to_json(assignments)
+    print(load_from_json())
+    print(f"Upcoming assignments :  {get_upcoming_assignments(assignments)}")
+    save_results(assignments)
+    read_results()
 
-save_to_json(assignments)
-print(load_from_json())
-print(f"Upcoming assignments :  {get_upcoming_assignments(assignments)}")
-save_results(assignments)
-read_results()
+    #username = input("Enter your github username: ")
+    #print(get_github_user(username)) 
+    courses = get_courses()
+    with open("courses.json", 'w') as f:
+        json.dump(courses, f, indent = 4)
 
-#username = input("Enter your github username: ")
-#print(get_github_user(username)) 
-courses = get_courses()
-with open("courses.json", 'w') as f:
-    json.dump(courses, f, indent = 4)
+    #print(get_course_names())
 
-#print(get_course_names())
-
-print(get_assignment(256118))
+    print(get_assignment(256118))
 
 
 
