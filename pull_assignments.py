@@ -20,7 +20,7 @@ def get_course_name():
             continue
     return courses
 
-courses = get_course_name()
+
 
 def get_assignments_name(course_id):   
     response = requests.get(f"https://uta.instructure.com/api/v1/courses/{course_id}/assignments", headers = headers)
@@ -36,6 +36,14 @@ def get_assignments_name(course_id):
         except KeyError:
             continue
     return assignment_names
+
+def get_all_assignments():
+    courses = get_course_name()
+    assignments = []             
+    for course in courses:
+        assignments.append({'course':course['name'],
+                            'assignments': get_assignments_name(course['id'])})
+    return assignments
 
 def get_upcoming_assignments(assignments):
     start = datetime.date(2026, 4, 1)
@@ -56,14 +64,3 @@ def get_upcoming_assignments(assignments):
         upcoming_assignments.append({'course': course['course'], 'assignments': due_assignments})
     
     return upcoming_assignments
-
-assignments = []             
-for course in courses:
-    assignments.append({'course':course['name'],
-                        'assignments': get_assignments_name(course['id'])})
-    
-    
-print(assignments)
-
-print(get_upcoming_assignments(assignments))
-    

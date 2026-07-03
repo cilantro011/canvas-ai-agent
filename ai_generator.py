@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 client = genai.Client(api_key = os.getenv("GEMINI_API_KEY"))
 
-MOCK_AI = True
+MOCK_AI = False
 
 def generate_study_tips(assignment_name):
     if MOCK_AI:
@@ -16,5 +16,3 @@ def generate_study_tips(assignment_name):
 
     )
     return response.text
-
-print(generate_study_tips("Building with gemini quiz"))
