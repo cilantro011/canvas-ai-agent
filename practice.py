@@ -34,6 +34,7 @@ def get_assignments(course_id):
     response = requests.get(f"https://uta.instructure.com/api/v1/courses/{course_id}/assignments", headers = headers)
     data = response.json()
     return data
+
 def get_assignment_names(assignments):
     names = []
     for assignment in assignments:
