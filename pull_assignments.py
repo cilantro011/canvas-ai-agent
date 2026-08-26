@@ -46,8 +46,8 @@ def get_all_assignments():
     return assignments
 
 def get_upcoming_assignments(assignments):
-    start = datetime.date(2026, 4, 1)
-    end = datetime.date(2026, 4, 10)
+    start = datetime.date.today()
+    end = datetime.date.today() + datetime.timedelta(days=30)
     upcoming_assignments = []
     for course in assignments:
         due_assignments = []
@@ -59,8 +59,11 @@ def get_upcoming_assignments(assignments):
             if due_at >= start and due_at <= end:
                 due_assignments.append({
                     'name': assignment['name'],
+           
                     'due_at': assignment['due_at']
                 })
-        upcoming_assignments.append({'course': course['course'], 'assignments': due_assignments})
+        if due_assignments:
+            upcoming_assignments.append({'course': course['course'], 'assignments': due_assignments})
     
     return upcoming_assignments
+
