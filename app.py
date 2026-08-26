@@ -1,11 +1,11 @@
-from flask import Flask, send_file
+from flask import Flask, send_file, render_template
 from pipeline import run_pipeline
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return '<h1>Canvas AI Agent</h1> <a href="/generate"> <button>Generate my study guide </button> </a>'
+    return render_template('index.html')
 
 @app.route('/generate')
 def generate():
