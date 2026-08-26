@@ -10,5 +10,6 @@ def run_pipeline():
         for assignment in course['assignments']:
             print(f"{course['course']}: {assignment['name']}: {generate_study_tips(assignment['name'])}")
 
+    create_pdf("study_guide.pdf", upcoming_assignments)
 run_pipeline()
     
