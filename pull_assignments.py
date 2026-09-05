@@ -3,6 +3,7 @@ import os
 import json
 from dotenv import load_dotenv
 import datetime
+from bs4 import BeautifulSoup
 
 load_dotenv()
 
@@ -31,7 +32,8 @@ def get_assignments_name(course_id):
             #assignment_names.append(assignment['name'])
             assignment_names.append ({
                 'name': assignment['name'],
-                'due_at': assignment['due_at']
+                'due_at': assignment['due_at'],
+                'description': assignment['description']
             })
         except KeyError:
             continue
@@ -43,7 +45,14 @@ def get_all_assignments():
     for course in courses:
         assignments.append({'course':course['name'],
                             'assignments': get_assignments_name(course['id'])})
+    
     return assignments
+
+def strip_html(html):
+    if not html:
+        return ""
+    soup = BeautifulSoup(html, 'html.parser')
+    return soup.get_text()
 
 def get_upcoming_assignments(assignments):
     start = datetime.date.today()
@@ -60,7 +69,8 @@ def get_upcoming_assignments(assignments):
                 due_assignments.append({
                     'name': assignment['name'],
            
-                    'due_at': assignment['due_at']
+                    'due_at': assignment['due_at'],
+                    'description': strip_html(assignment['description'])
                 })
         if due_assignments:
             upcoming_assignments.append({'course': course['course'], 'assignments': due_assignments})

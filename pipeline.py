@@ -8,10 +8,11 @@ def run_pipeline():
     upcoming_assignments = get_upcoming_assignments(assignments)
     for course in upcoming_assignments:
         for assignment in course['assignments']:
-            print(f"{course['course']}: {assignment['name']}: {generate_study_tips(assignment['name'])}")
+            #print(f"{course['course']}: {assignment['name']}: {generate_study_tips(assignment['name'])}")
+            print(assignment['description'])
+    #create_pdf("study_guide.pdf", upcoming_assignments)
 
-    create_pdf("study_guide.pdf", upcoming_assignments)
-    
+run_pipeline()    
 if __name__ == '__main__':
     run_pipeline()
     
