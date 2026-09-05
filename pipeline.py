@@ -11,5 +11,7 @@ def run_pipeline():
             print(f"{course['course']}: {assignment['name']}: {generate_study_tips(assignment['name'])}")
 
     create_pdf("study_guide.pdf", upcoming_assignments)
-run_pipeline()
+    
+if __name__ == '__main__':
+    run_pipeline()
     
